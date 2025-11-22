@@ -36,5 +36,5 @@ jobs:
         env:
           # Corregí el typo 'NETLYFY' a 'NETLIFY'. 
           # Asegúrate de que en GitHub Secrets se llamen igual.
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLYFY_AUTH_TOKEN: ${{ secrets.NETLYFY_AUTH_TOKEN }}
+          NETLYFY_SITE_ID: ${{ secrets.NETLYFY_SITE_ID }}
