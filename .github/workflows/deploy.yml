@@ -1,0 +1,40 @@
+name: Deploy Angular to Netlify
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'npm' # Acelera la instalación de dependencias
+
+      - name: Install Dependencies
+        # 'npm ci' es más rápido y seguro que 'install' para entornos de CI
+        run: npm ci
+
+      - name: Build Angular app
+        # Usar 'npm run build' asegura que se use el CLI de Angular local
+        run: npm run build -- --configuration=production
+
+      - name: Install Netlify CLI
+        run: npm install -g netlify-cli
+
+      - name: Deploy to Netlify
+        # Asegúrate de que la ruta 'dist/...' sea correcta para tu versión de Angular
+        run: netlify deploy --dir=dist/md-frontend/browser --prod
+        env:
+          # Corregí el typo 'NETLYFY' a 'NETLIFY'. 
+          # Asegúrate de que en GitHub Secrets se llamen igual.
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
